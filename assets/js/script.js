@@ -2,11 +2,12 @@ const apiKey = "d0a06a26fc67ad3dcc286204f13f1864";
 // https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 const exclude = "alerts";
 var cityList = [];
-const cityName ="Miami";
-var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&APPID=${apiKey}`;
+
 // var apiURLLong = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&appid=${apiKey}`;
 
-var currentWeatherDiv = $("#current-weather");
+const currentWeatherDiv = $("#current-weather");
+const submit_button = document.getElementById("submit");
+const weekForecast = $("weekForecast");
 // if (localStorage.getItem("localWeatherSearches")) {
 //     citiesArray = JSON.parse(localStorage.getItem("localWeatherSearches"));
 //     writeSearchHistory(cityList);
@@ -22,12 +23,18 @@ var currentWeatherDiv = $("#current-weather");
 //     returnCurrentWeather(cityName);
 //     returnWeatherForecast(cityName);
 // });
-function submit(){
-    let cityName = $("#search").val();
-    returnCurrentWeather(cityName);
-    returnWeatherForecast(cityName);
-};
-function currentWeather(){
+// function submit(){
+//     let cityName = $("#search").val();
+//     returnCurrentWeather(cityName);
+//     returnWeatherForecast(cityName);
+// };
+submit_button.addEventListener("click", function(){
+    let city_name = $("#search").val();
+    currentWeather(city_name);
+})
+
+function currentWeather(city_name){
+    var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city_name}&units=metric&APPID=${apiKey}`;
     fetch(apiURL)
         .then((response)=>{
             var data =  response.json();
@@ -36,16 +43,16 @@ function currentWeather(){
         .then(function(data){
             let weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
             var today = new Date();
-            var date = (today.getMonth()+1)+'/'+today.getDate()+''+today.getFullYear()
-            var lat = data.lat;
-            var lon = data.lon;
+            var date = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear()
             ;
             currentWeatherDiv.html(`
             <h3>${data.name}, ${data.sys.country} (${date}) <img src=${weatherIcon} height="50px"> </h3>
             <h6>Temperature: ${data.main.temp}°F </h6>
             <h6>Wind: ${data.wind.speed}MPH </h6>
             <h6>Humidity: ${data.main.humidity}% </h6>
-            `,UVIFunction(data.coord));
+            `,
+            UVIFunction(data.coord),
+            fiveDayForecast(data.coord));
               // uv index data.coord
             console.log(data);
         })
@@ -89,8 +96,24 @@ function UVIFunction(latandlong){
             console.log(error);
           });
 };
+function fiveDayForecast(latandlong){
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latandlong.lat}&lon=${latandlong.lon}&exclude=${exclude}&appid=${apiKey}`)
+        .then((response)=>{
 
-currentWeather();
+            var data =  response.json(); 
+            return data;   
+        })
+        .then(function(data){
+            let weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+                weekForecast.html(`
+                    <p>Temp: ${data.daily.temp}</p>
+                `);
+            })
+        .catch(function(error) {
+            alert("Unable to connect");
+            console.log(error);
+          })
+};
 // UVI();
 // function weatherForecast(cityName){
 

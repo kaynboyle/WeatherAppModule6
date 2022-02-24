@@ -1,0 +1,20 @@
+div.flex-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+/* div.flex-container div.city-search{
+    display: flex;
+    flex-wrap: wrap;
+} */
+/* div.flex-container div#current-weather{
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+
+
+/* div.flex-more{
+    justify-content: center;
+    /* display: flex;
+    flex-wrap: wrap; */
