@@ -7,7 +7,7 @@ var cityList = [];
 
 const currentWeatherDiv = $("#current-weather");
 const submit_button = document.getElementById("submit");
-const weekForecast = $("weekForecast");
+const weekForecast = $("#weekForecast");
 // if (localStorage.getItem("localWeatherSearches")) {
 //     citiesArray = JSON.parse(localStorage.getItem("localWeatherSearches"));
 //     writeSearchHistory(cityList);
@@ -104,9 +104,8 @@ function fiveDayForecast(latandlong){
             return data;   
         })
         .then(function(data){
-            let weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-                weekForecast.html(`
-                    <p>Temp: ${data.daily.temp}</p>
+                weekForecast.append(`
+                    <p>Temp: ${data.daily[0].temp.day}</p>
                 `);
             })
         .catch(function(error) {
