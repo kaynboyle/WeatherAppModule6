@@ -8,30 +8,23 @@ var cityList = [];
 const currentWeatherDiv = $("#current-weather");
 const submit_button = document.getElementById("submit");
 const weekForecast = $("#weekForecast");
-// if (localStorage.getItem("localWeatherSearches")) {
-//     citiesArray = JSON.parse(localStorage.getItem("localWeatherSearches"));
-//     writeSearchHistory(cityList);
-// } else {
-//     citiesArray = [];
-// };
+const storageDiv = $("#localStorage");
 
-
-// $("#submitCity").click(function() {
-//     //tried adding event listeners for event//
-//     event.preventDefault();
-//     let cityName = $("#cityInput").val();
-//     returnCurrentWeather(cityName);
-//     returnWeatherForecast(cityName);
-// });
-// function submit(){
-//     let cityName = $("#search").val();
-//     returnCurrentWeather(cityName);
-//     returnWeatherForecast(cityName);
-// };
 submit_button.addEventListener("click", function(){
     let city_name = $("#search").val();
     currentWeather(city_name);
-})
+    storageSet(city_name);
+});
+function storageSet(city_name){
+    window.localStorage.setItem(city_name, city_name);
+    console.log(localStorage);
+    // var storageLength = localStorage.length;
+    var displayStorage = window.localStorage.getItem(city_name);
+    storageDiv.append(`
+    <p> ${displayStorage}</p>
+    `);
+}
+
 
 function currentWeather(city_name){
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city_name}&units=metric&APPID=${apiKey}`;
@@ -45,7 +38,7 @@ function currentWeather(city_name){
             var today = new Date();
             var date = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear()
             ;
-            currentWeatherDiv.html(`
+            currentWeatherDiv.append(`
             <h3>${data.name}, ${data.sys.country} (${date}) <img src=${weatherIcon} height="50px"> </h3>
             <h6>Temperature: ${data.main.temp}°F </h6>
             <h6>Wind: ${data.wind.speed}MPH </h6>
@@ -68,6 +61,7 @@ function UVIFunction(latandlong){
             return data;
         })
         .then(function(data){
+            
             if (data.current.uvi <= 4){
                 currentWeatherDiv.append(`
                 <h6 style="background-color:blue; margin-right:250px; color: white;">UVI: ${data.current.uvi}</h6>
@@ -104,9 +98,19 @@ function fiveDayForecast(latandlong){
             return data;   
         })
         .then(function(data){
+            let weatherIcon = `https://openweathermap.org/img/wn/${data.daily[0].weather[0].icon}@2x.png`;
+            for (i=0; i<5; i++){
+                weatherIcon = `https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png`;
+        
                 weekForecast.append(`
-                    <p>Temp: ${data.daily[0].temp.day}</p>
+                <div class="day">
+                    <h3>Day ${i+1}</h3>
+                    <p>Temp: ${data.daily[i].temp.day}°F <img src=${weatherIcon} height="50px"></p>
+                    <p>Humidity: ${data.daily[i].humidity} %</p>
+                    <p>Wind: ${data.daily[i].wind} MPH</p>
+                </div>
                 `);
+            };
             })
         .catch(function(error) {
             alert("Unable to connect");
@@ -121,3 +125,24 @@ function fiveDayForecast(latandlong){
 // function uvIndex(coordinates){
 
 // }
+{/* <div class="day">
+                    <h3>Day 2</h3>
+                    <pTemp:  ${data.daily[1].temp.day}°F  <img src=${weatherIcon} height="50px"></p>
+                    <p>Humidity: ${data.daily[1].humidity} %</p>
+                    <p>Wind: ${data.daily[1].wind} MPH</p>
+                </div>
+                <div class="day">
+                    <pTemp:  ${data.daily[2].temp.day}°F</p>
+                    <p>Humidity: ${data.daily[2].humidity} %</p>
+                    <p>Wind: ${data.daily[2].wind} MPH</p>
+                </div>
+                <div class="day">
+                    <pTemp:  ${data.daily[3].temp.day}°F</p>
+                    <p>Humidity: ${data.daily[3].humidity} %</p>
+                    <p>Wind: ${data.daily[3].wind} MPH</p>
+                </div>
+                <div class="day">
+                    <pTemp:  ${data.daily[4].temp.day}°F</p>
+                    <p>Humidity: ${data.daily[4].humidity} %</p>
+                    <p>Wind: ${data.daily[4].wind} MPH</p>
+                </div> */}
