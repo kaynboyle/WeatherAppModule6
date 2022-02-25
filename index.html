@@ -16,22 +16,23 @@
         <h1>Weather Dashboard</h1>
     </header>
     <div class="flex-container">
-        <div class="flex1">
+        <div id="column1" class="column">
             <div class="city-search">
                 <h4>Search for a City:</h4>
                 <input type="text" id="search" placeholder="Enter City"/>
                 <button id="submit" type="button" >Submit</button>
+            </div>
             <div id="localStorage">
 
             </div>
         </div>
-        <div class="flex1">
+        <div class="column">
             <div id="current-weather">
-                <h6>Current Weather </h6>
+                <h4>Current Weather </h4>
             </div>
-            <div id="weekForecast">
-                <h6>5-Day Forecast</h6>
-            </div>
+        </div>
+        <div id="weekForecast">
+            <h6>5-Day Forecast</h6>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

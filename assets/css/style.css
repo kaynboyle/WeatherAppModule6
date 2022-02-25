@@ -1,20 +1,38 @@
-*{
-    margin-left: 10px;
-}
 
+h1{
+    display:flex;
+    justify-content: center;
+    background-color:rgb(163, 163, 223);
+}
+#column1{
+    margin-left:10px;
+}
 div.flex-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    width: 100%;
 }
-div.flex1{
-    display: flex;
+div.flex-container div.column{
+    display: flex; 
     flex-direction: column;
-}
+    flex-basis: 100%;
+    flex: 1;
+  }
 
 div.day{
     background-color:rgb(163, 163, 223);
     margin-right: 80px;
+}
+div.weekForecast{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#localStorage {
+    background-color:rgb(163, 163, 223);
+    margin-right: 210px;
 }
 /* div.flex-container div.city-search{
     display: flex;

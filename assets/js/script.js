@@ -38,7 +38,7 @@ function currentWeather(city_name){
             var today = new Date();
             var date = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear()
             ;
-            currentWeatherDiv.append(`
+            currentWeatherDiv.html(`
             <h3>${data.name}, ${data.sys.country} (${date}) <img src=${weatherIcon} height="50px"> </h3>
             <h6>Temperature: ${data.main.temp}°F </h6>
             <h6>Wind: ${data.wind.speed}MPH </h6>
@@ -91,6 +91,7 @@ function UVIFunction(latandlong){
           });
 };
 function fiveDayForecast(latandlong){
+    weekForecast.html(`" "`);
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latandlong.lat}&lon=${latandlong.lon}&exclude=${exclude}&appid=${apiKey}`)
         .then((response)=>{
 
