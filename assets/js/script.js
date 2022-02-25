@@ -64,17 +64,17 @@ function UVIFunction(latandlong){
             
             if (data.current.uvi <= 4){
                 currentWeatherDiv.append(`
-                <h6 style="background-color:blue; margin-right:250px; color: white;">UVI: ${data.current.uvi}</h6>
+                <h6 style="background-color:blue; margin-right:850px; color: white;">UVI: ${data.current.uvi}</h6>
                 `)
             }
             else if (data.current.uvi <= 8){
                 currentWeatherDiv.append(`
-                <h6 style="color:green ;margin-right:250px; color: white;">UVI: ${data.current.uvi}</h6>
+                <h6 style="color:green ;margin-right:850px; color: white;">UVI: ${data.current.uvi}</h6>
                 `)
             }
             else if (data.current.uvi >= 11){
                 currentWeatherDiv.append(`
-                <h6 style="background-color:red; margin-right:250px; color: white;">UVI: ${data.current.uvi} </h6>
+                <h6 style="background-color:red; margin-right:850px; color: white;">UVI: ${data.current.uvi} </h6>
                 `)
             }
             // currentWeatherDiv.append(`
@@ -91,7 +91,7 @@ function UVIFunction(latandlong){
           });
 };
 function fiveDayForecast(latandlong){
-    weekForecast.html(`" "`);
+    weekForecast.html(`<h4>Five Day Forecast</h4>`);
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latandlong.lat}&lon=${latandlong.lon}&exclude=${exclude}&appid=${apiKey}`)
         .then((response)=>{
 
@@ -102,10 +102,10 @@ function fiveDayForecast(latandlong){
             let weatherIcon = `https://openweathermap.org/img/wn/${data.daily[0].weather[0].icon}@2x.png`;
             for (i=0; i<5; i++){
                 weatherIcon = `https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png`;
-        
+                let dates = new Date(data.daily[i].dt*1000);
                 weekForecast.append(`
                 <div class="day">
-                    <h3>Day ${i+1}</h3>
+                    <h3>${dates.getMonth()+1}/${dates.getDate()}/${dates.getFullYear()}</h3>
                     <p>Temp: ${data.daily[i].temp.day}°F <img src=${weatherIcon} height="50px"></p>
                     <p>Humidity: ${data.daily[i].humidity} %</p>
                     <p>Wind: ${data.daily[i].wind} MPH</p>

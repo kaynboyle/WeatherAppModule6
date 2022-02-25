@@ -12,27 +12,34 @@ div.flex-container{
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
+    background-color:rgb(216, 216, 238);
 }
 div.flex-container div.column{
     display: flex; 
     flex-direction: column;
     flex-basis: 100%;
     flex: 1;
+    
   }
 
 div.day{
     background-color:rgb(163, 163, 223);
     margin-right: 80px;
 }
-div.weekForecast{
+div#weekForecast{ 
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    margin-bottom: 10px;
+    background-color: rgb(216, 216, 238);
 }
 
 #localStorage {
     background-color:rgb(163, 163, 223);
-    margin-right: 210px;
+    margin-right: 850px;
+}
+
+div.day{
+   margin-top: 50px; 
 }
 /* div.flex-container div.city-search{
     display: flex;
